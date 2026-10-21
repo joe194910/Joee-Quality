@@ -79,6 +79,24 @@
         "goal": {
           "type": "string"
         },
+        "motionChecks": {
+          "additionalProperties": false,
+          "properties": {
+            "blackFrames": {
+              "type": "boolean"
+            },
+            "keyframes": {
+              "type": "boolean"
+            },
+            "silence": {
+              "type": "boolean"
+            },
+            "subtitlePath": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "requiresAudio": {
           "type": "boolean"
         },

@@ -11,7 +11,7 @@ async function commandExists(name: string): Promise<boolean> {
   const { spawn } = await import("node:child_process");
   return new Promise(resolve => { const p = spawn(name, ["-version"], { shell: false }); p.on("error", () => resolve(false)); p.on("close", c => resolve(c === 0)); });
 }
-export async function environment(cwd = process.cwd()): Promise<Environment> { return { cwd, ffprobe: await commandExists("ffprobe") ? "ffprobe" : undefined }; }
+export async function environment(cwd = process.cwd()): Promise<Environment> { return { cwd, ffprobe: await commandExists("ffprobe") ? "ffprobe" : undefined, ffmpeg: await commandExists("ffmpeg") ? "ffmpeg" : undefined }; }
 export async function evaluate(artifact: Artifact, brief: Brief, suppliedEnv?: Environment): Promise<Report> {
   const env = suppliedEnv ?? await environment();
   const rubric = await loadRubric();

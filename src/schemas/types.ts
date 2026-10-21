@@ -12,6 +12,7 @@ export interface Brief {
   goal: string; audience?: string; deliverables?: string[]; constraints?: string[];
   acceptanceCriteria?: string[]; targetGrade?: "S" | "A" | "B" | "C"; domain: Domain;
   requiresAudio?: boolean;
+  motionChecks?: { blackFrames?: boolean; silence?: boolean; keyframes?: boolean; subtitlePath?: string };
   testCommand?: { command: string; args?: string[]; timeoutMs?: number; maxOutputBytes?: number };
 }
 export interface Criterion {

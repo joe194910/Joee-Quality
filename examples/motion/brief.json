@@ -4,5 +4,10 @@
   "acceptanceCriteria": ["可播放", "包含音轨"],
   "targetGrade": "A",
   "domain": "motion",
-  "requiresAudio": true
+  "requiresAudio": true,
+  "motionChecks": {
+    "blackFrames": true,
+    "silence": true,
+    "keyframes": true
+  }
 }

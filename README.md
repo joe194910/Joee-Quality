@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-25%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-30%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -45,6 +45,9 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 使用 FFprobe 读取视频流、音频流和媒体元数据。
 - 视频文件缺少视频轨时生成硬阻断。
 - Brief 要求口播或音频但文件没有音轨时生成硬阻断。
+- 可选运行 FFmpeg `blackdetect` 和 `silencedetect`，记录真实命令、阈值和时间区间。
+- 可在报告 evidence 目录按媒体时长 10%、50%、90% 抽取三张真实样本帧。
+- 支持解析外部 SRT，检测字幕区间反向、相互重叠和超出媒体时长。
 - FFprobe 不存在或无法解析文件时明确标记未评估，不伪造检查结果。
 
 ### 报告与复评
@@ -152,7 +155,13 @@ Motion 口播视频可以声明必须存在音轨：
 {
   "goal": "检查口播视频技术交付",
   "domain": "motion",
-  "requiresAudio": true
+  "requiresAudio": true,
+  "motionChecks": {
+    "blackFrames": true,
+    "silence": true,
+    "keyframes": true,
+    "subtitlePath": "./subtitles.srt"
+  }
 }
 ```
 
@@ -369,8 +378,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  6 passed (6)
-Tests       25 passed (25)
+Test Files  7 passed (7)
+Tests       30 passed (30)
 ```
 
 测试覆盖以下关键场景：
@@ -410,7 +419,7 @@ joee-quality
 - 当前没有声音艺术评审器，存在音轨不代表口播、音乐或混音质量合格。
 - 当前没有联网 Research 事实核验器，不能自动证明研究结论和引用正确。
 - Code 测试命令具有允许列表、超时和日志上限，但尚未提供 CPU/内存级操作系统沙箱。
-- 当前没有黑帧、静音区间、关键帧抽样和字幕时间轴检查。
+- 黑帧、静音和关键帧属于阈值或抽样检查，不能替代逐帧观看和人工试听；字幕当前支持 SRT 时间轴，不检查画面排版溢出。
 - `verify` 重跑的是已经实现的确定性检查，不等于独立人工复审。
 - 当前不会自动授予 S 级；S 需要合格的人类或专业终审。
 - Joee-Quality 不是第三方认证机构，报告只代表本项目标准和实际获得的证据。
