@@ -1,0 +1,14 @@
+{
+  "artifact": { "id": "a", "type": "json", "localPath": "artifact.json" },
+  "brief": { "goal": "legacy", "domain": "design" },
+  "coverage": { "evaluated": 0, "applicable": 0, "ratio": 0, "threshold": 0.7 },
+  "overallStatus": "unrated",
+  "grade": null,
+  "score": null,
+  "dimensions": [],
+  "gates": [],
+  "findings": [],
+  "repairPlan": [],
+  "evidence": [],
+  "standardVersion": "0.1.0"
+}

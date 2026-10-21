@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-37%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-40%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -300,6 +300,14 @@ jqs report .\.jqs\reports\design-demo\report.json
 jqs report .\.jqs\reports\design-demo\report.json --json
 ```
 
+### 迁移历史报告
+
+```powershell
+jqs migrate .\legacy-report.json --out .\migrated-report.json
+```
+
+迁移器补充当前版本要求的字段、记录迁移历史，并在写入前重新执行完整 Schema、证据引用和硬阻断不变量校验。无法满足当前协议的历史报告会被拒绝，不会静默丢弃数据。
+
 ### 管理 Quality Memory
 
 查看项目记忆：
@@ -344,6 +352,7 @@ jqs learn enable
 | `jqs report` | 校验并显示已有报告 |
 | `jqs compare` | 比较两次评审结果 |
 | `jqs verify` | 对修改后产物重新执行检查 |
+| `jqs migrate` | 将历史报告迁移到当前 Schema |
 | `jqs learn` | 管理项目范围 Quality Memory |
 
 | 退出码 | 说明 |
@@ -403,8 +412,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  9 passed (9)
-Tests       37 passed (37)
+Test Files  10 passed (10)
+Tests       40 passed (40)
 ```
 
 测试覆盖以下关键场景：

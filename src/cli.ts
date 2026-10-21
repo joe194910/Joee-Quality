@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { resolve, extname } from "node:path";
+import { dirname, resolve, extname } from "node:path";
 import { spawnSync } from "node:child_process";
 import { evaluate, environment } from "./core/engine.js";
 import { stable } from "./core/utils.js";
 import { markdown } from "./reports/markdown.js";
 import { reportSchema } from "./schemas/report.js";
+import { migrateReport } from "./schemas/migrate.js";
 import type { Artifact, Brief, Report } from "./schemas/types.js";
 import { compareReports } from "./core/compare.js";
 import { addMemory, deleteMemory, deprecateMemory, exportMemory, listMemory, setMemoryEnabled } from "./memory/store.js";
@@ -35,6 +36,7 @@ program.command("compare").description("比较两次评审结果").argument("<be
 program.command("verify").description("重新评审受影响项；不会伪装成人工验证").argument("<report>").requiredOption("--artifact <path>").option("--out <directory>", "输出目录").action(async (reportPath, o) => {
   const previous = reportSchema.parse(await readJson(reportPath)) as Report; const next = await evaluate({ ...artifact(o.artifact, previous.brief.domain), metadata: previous.artifact.metadata }, previous.brief); const diff = compareReports(previous, next); if (o.out) { await mkdir(o.out, { recursive: true }); await writeFile(resolve(o.out, "report.json"), stable(next)); await writeFile(resolve(o.out, "report.md"), markdown(next)); } output({ verification: diff, status: next.overallStatus }, true); process.exitCode = next.overallStatus === "blocked" ? EXIT.FAILED : EXIT.OK;
 });
+program.command("migrate").description("迁移历史报告到当前 Schema").argument("<report>").requiredOption("--out <path>", "迁移后的 JSON 路径").action(async (path, o) => { const migrated = migrateReport(await readJson(path)); const target = resolve(o.out); await mkdir(dirname(target), { recursive: true }); await writeFile(target, stable(migrated.report)); output({ from: migrated.from, to: migrated.to, changes: migrated.changes, out: target }, true); });
 const learn = program.command("learn").description("管理本地范围 Quality Memory");
 learn.command("list").option("--scope <scope>", "作用域", "project").action(async () => output(await listMemory(process.cwd()), true));
 learn.command("add").requiredOption("--category <category>").requiredOption("--statement <text>").requiredOption("--source <source>").option("--scope <scope>", "作用域", "project").action(async o => output(await addMemory(process.cwd(), { category: o.category, statement: o.statement, source: o.source, counterexamples: [], scope: o.scope, invalidation: "新证据推翻或适用范围变化" }), true));

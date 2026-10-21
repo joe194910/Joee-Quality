@@ -11,3 +11,4 @@
 - Added FFmpeg black/silence detection, real frame sampling, and SRT overlap/overflow validation.
 - Added structured Design accessibility checks and Research claim/source traceability checks.
 - Added Quality Memory export, permanent deletion, disable, and enable controls.
+- Added validated migration of unversioned and 0.1.0 reports to report schema 1.0.0.
