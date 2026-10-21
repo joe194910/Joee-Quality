@@ -1,0 +1,638 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "hash": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "localPath": {
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {},
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "ownerScope": {
+          "type": "string"
+        },
+        "privacy": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "type": "object"
+    },
+    "brief": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptanceCriteria": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "audience": {
+          "type": "string"
+        },
+        "constraints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "deliverables": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "domain": {
+          "enum": [
+            "motion",
+            "design",
+            "research",
+            "code"
+          ],
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "requiresAudio": {
+          "type": "boolean"
+        },
+        "targetGrade": {
+          "enum": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "type": "string"
+        },
+        "testCommand": {
+          "additionalProperties": false,
+          "properties": {
+            "args": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "command": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "command"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "goal",
+        "domain"
+      ],
+      "type": "object"
+    },
+    "coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "applicable": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "evaluated": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ratio": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "threshold": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "evaluated",
+        "applicable",
+        "ratio",
+        "threshold"
+      ],
+      "type": "object"
+    },
+    "criteria": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "criterionId": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "const": 0,
+                    "type": "number"
+                  },
+                  {
+                    "const": 2,
+                    "type": "number"
+                  },
+                  {
+                    "const": 4,
+                    "type": "number"
+                  },
+                  {
+                    "const": 6,
+                    "type": "number"
+                  },
+                  {
+                    "const": 8,
+                    "type": "number"
+                  },
+                  {
+                    "const": 10,
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "not_applicable",
+              "not_evaluated"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "criterionId",
+          "status",
+          "score",
+          "reason",
+          "evidenceIds"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "dimensions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "coverage": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "criterionIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "dimension": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "maximum": 10,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "dimension",
+          "score",
+          "confidence",
+          "coverage",
+          "criterionIds",
+          "reason",
+          "evidenceIds"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "availability": {
+            "enum": [
+              "available",
+              "missing",
+              "invalid"
+            ],
+            "type": "string"
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "direct_observation",
+              "automated_test",
+              "source_reference",
+              "user_feedback",
+              "expert_judgment",
+              "inference"
+            ],
+            "type": "string"
+          },
+          "locator": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "observedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "type": "string"
+          },
+          "source": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tool": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "locator",
+          "source",
+          "observedAt",
+          "confidence",
+          "availability"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "findings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blocking": {
+            "type": "boolean"
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "dimension": {
+            "type": "string"
+          },
+          "evidenceIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string"
+          },
+          "recommendedFix": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "suggestion"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "fixed",
+              "regressed",
+              "unverifiable"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "dimension",
+          "description",
+          "severity",
+          "evidenceIds",
+          "confidence",
+          "impact",
+          "recommendedFix",
+          "verification",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "gates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "evidenceIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "gate": {
+            "enum": [
+              "brief",
+              "concept",
+              "craft",
+              "critique",
+              "acceptance"
+            ],
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "reviewedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "type": "string"
+          },
+          "reviewerMode": {
+            "enum": [
+              "automated",
+              "human",
+              "same_agent_second_pass"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "needs_revision",
+              "blocked",
+              "not_applicable",
+              "not_evaluated"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "gate",
+          "status",
+          "reason",
+          "evidenceIds",
+          "reviewerMode",
+          "reviewedAt"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "grade": {
+      "anyOf": [
+        {
+          "enum": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "F"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "overallStatus": {
+      "enum": [
+        "passed",
+        "needs_revision",
+        "blocked",
+        "unrated"
+      ],
+      "type": "string"
+    },
+    "repairPlan": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "changeScope": {
+            "type": "string"
+          },
+          "expectedEffect": {
+            "type": "string"
+          },
+          "findingIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2"
+            ],
+            "type": "string"
+          },
+          "risk": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "done",
+              "deferred"
+            ],
+            "type": "string"
+          },
+          "verifyBy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "findingIds",
+          "changeScope",
+          "action",
+          "owner",
+          "expectedEffect",
+          "risk",
+          "verifyBy",
+          "priority",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "reviewHistory": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "at": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "type": "string"
+          },
+          "reviewer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "action",
+          "reviewer"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "score": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "standardVersion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "standardVersion",
+    "artifact",
+    "brief",
+    "coverage",
+    "overallStatus",
+    "grade",
+    "score",
+    "criteria",
+    "dimensions",
+    "gates",
+    "findings",
+    "repairPlan",
+    "evidence",
+    "limitations",
+    "reviewHistory"
+  ],
+  "title": "Joee-Quality Report",
+  "type": "object"
+}

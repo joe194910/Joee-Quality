@@ -12,6 +12,16 @@ export interface Brief {
   goal: string; audience?: string; deliverables?: string[]; constraints?: string[];
   acceptanceCriteria?: string[]; targetGrade?: "S" | "A" | "B" | "C"; domain: Domain;
   requiresAudio?: boolean;
+  testCommand?: { command: string; args?: string[] };
+}
+export interface Criterion {
+  id: string; description: string; domain: Domain | "core"; dimension: string;
+  importance: "required" | "important" | "optional"; blocking: boolean;
+  verificationMethod: string; applicability: string;
+}
+export interface CriterionAssessment {
+  criterionId: string; status: "pass" | "fail" | "not_applicable" | "not_evaluated";
+  score: 0 | 2 | 4 | 6 | 8 | 10 | null; reason: string; evidenceIds: string[];
 }
 export interface Evidence {
   id: string;
@@ -43,6 +53,7 @@ export interface Report {
   coverage: { evaluated: number; applicable: number; ratio: number; threshold: number };
   overallStatus: "passed" | "needs_revision" | "blocked" | "unrated";
   grade: "S" | "A" | "B" | "C" | "F" | null; score: number | null;
+  criteria: CriterionAssessment[];
   dimensions: DimensionAssessment[]; gates: GateAssessment[]; findings: Finding[];
   repairPlan: RepairTask[]; evidence: Evidence[]; limitations: string[];
   reviewHistory: Array<{ at: string; action: string; reviewer: string }>;

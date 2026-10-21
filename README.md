@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-15%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-19%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -26,6 +26,7 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 检测空文件和无效 JSON。
 - 计算可访问文件的 SHA-256 哈希。
 - 校验报告 Schema、Evidence ID 引用和硬阻断状态一致性。
+- 提供可生成、可提交的 Draft-07 JSON Schema。
 - 使用稳定 JSON 序列化，便于 Git diff 和自动化比较。
 - 路径不存在或证据不可访问时不生成虚假分数。
 
@@ -200,10 +201,23 @@ jqs evaluate .\my-project `
   --out .\.jqs\reports\code-demo
 ```
 
-当前版本会在 `my-project` 目录中真实执行：
+示例 Brief 会在 `my-project` 目录中真实执行：
 
 ```powershell
 npm test
+```
+
+可以在 Brief 中配置不经过 shell 拼接的测试命令和参数：
+
+```json
+{
+  "goal": "运行项目集成测试",
+  "domain": "code",
+  "testCommand": {
+    "command": "npm",
+    "args": ["run", "test:integration"]
+  }
+}
 ```
 
 测试失败时命令返回退出码 `1`，报告状态为 `blocked`。
@@ -341,14 +355,15 @@ Copy-Item -Recurse .\skills\joee-quality "$env:USERPROFILE\.codex\skills\joee-qu
 ```powershell
 npm run build
 npm test
+npm run schema
 npm pack --dry-run
 ```
 
 当前测试结果：
 
 ```text
-Test Files  4 passed (4)
-Tests       15 passed (15)
+Test Files  5 passed (5)
+Tests       19 passed (19)
 ```
 
 测试覆盖以下关键场景：
@@ -387,7 +402,7 @@ joee-quality
 - 当前没有多模态视觉模型，不能独立判断构图、色彩、字体、叙事或“高级感”。
 - 当前没有声音艺术评审器，存在音轨不代表口播、音乐或混音质量合格。
 - 当前没有联网 Research 事实核验器，不能自动证明研究结论和引用正确。
-- Code 领域当前固定运行 `npm test`，尚未开放任意测试命令配置。
+- Code 测试命令由 Brief 配置，但当前尚未提供超时、资源限额和命令允许列表策略。
 - 当前没有黑帧、静音区间、关键帧抽样和字幕时间轴检查。
 - `verify` 重跑的是已经实现的确定性检查，不等于独立人工复审。
 - 当前不会自动授予 S 级；S 需要合格的人类或专业终审。

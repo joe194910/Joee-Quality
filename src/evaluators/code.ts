@@ -1,10 +1,18 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
 import type { Evaluator } from "./types.js";
 import { now } from "../core/utils.js";
 
 function run(command: string, args: string[], cwd: string): Promise<{ code: number; output: string }> {
   return new Promise(resolve => {
-    const child = spawn(command, args, { cwd, shell: process.platform === "win32", env: process.env }); let output = "";
+    let executable = command; let commandArgs = args;
+    if (process.platform === "win32" && command.toLowerCase() === "npm") {
+      const npmCli = join(dirname(process.execPath), "node_modules", "npm", "bin", "npm-cli.js");
+      if (!existsSync(npmCli)) return resolve({ code: 127, output: `无法定位 npm CLI: ${npmCli}` });
+      executable = process.execPath; commandArgs = [npmCli, ...args];
+    }
+    const child = spawn(executable, commandArgs, { cwd, shell: false, env: process.env }); let output = "";
     child.stdout.on("data", x => output += x); child.stderr.on("data", x => output += x);
     child.on("error", e => resolve({ code: 127, output: e.message })); child.on("close", code => resolve({ code: code ?? 1, output }));
   });
@@ -17,6 +25,6 @@ export const codeEvaluator: Evaluator = {
     const cwd = artifact.localPath ?? environment.cwd; const result = await run(command, args, cwd);
     const evidence = [{ id: "ev-tests", kind: "automated_test" as const, locator: `command:${command} ${args.join(" ")}`, source: "subprocess", observedAt: now(), confidence: 1, tool: command, notes: `exit=${result.code}\n${result.output.slice(-4000)}`, availability: "available" as const }];
     const findings = result.code === 0 ? [] : [{ id: "f-tests", title: "真实测试失败", dimension: "reliability", description: `测试命令退出码为 ${result.code}。`, severity: "critical" as const, evidenceIds: ["ev-tests"], confidence: 1, impact: "代码交付不满足正确性底线", recommendedFix: "修复失败测试或测试环境后重新运行。", verification: "相同命令退出码为 0。", status: "open" as const, blocking: true }];
-    return { evidence, findings, limitations: [], applicableCriteria: 1, evaluatedCriteria: 1 };
+    return { evidence, findings, criteria: [{ criterionId: "code.tests-pass", status: result.code === 0 ? "pass" : "fail", score: result.code === 0 ? 10 : 0, reason: result.code === 0 ? "配置的真实测试命令执行成功。" : `测试命令退出码为 ${result.code}。`, evidenceIds: ["ev-tests"] }], limitations: [], applicableCriteria: 1, evaluatedCriteria: 1 };
   }
 };

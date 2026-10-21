@@ -1,1 +1,9 @@
-{"goal":"验证代码测试真实通过","domain":"code","targetGrade":"A"}
+{
+  "goal": "验证代码测试真实通过",
+  "domain": "code",
+  "targetGrade": "A",
+  "testCommand": {
+    "command": "npm",
+    "args": ["test"]
+  }
+}

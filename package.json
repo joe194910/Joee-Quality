@@ -10,6 +10,7 @@
     "build": "npm run clean && tsc -p tsconfig.json",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "schema": "npm run build && node dist/schemas/export.js config/report.schema.json",
     "prepack": "npm run build"
   },
   "engines": { "node": ">=20" },
