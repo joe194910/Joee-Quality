@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-51%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-52%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -436,8 +436,10 @@ npm pack --dry-run
 
 ```text
 Test Files  12 passed (12)
-Tests       51 passed (51)
+Tests       52 passed (52)
 ```
+
+`npm pack` 产物还会安装到一个不包含源码和根目录配置的干净临时项目中，并实际运行安装包提供的 `jqs doctor` 与 `jqs evaluate`。量表从安装包自身定位，不依赖调用方工作目录。
 
 测试覆盖以下关键场景：
 

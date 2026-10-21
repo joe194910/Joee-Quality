@@ -15,3 +15,4 @@
 - Added validated professional-review imports, Quick/Standard/Signature gate behavior, and human-only S eligibility.
 - Added verification classification for fixed, open, added, regressed, and unverifiable findings.
 - Added a versioned standalone integration contract and `evaluate-contract` CLI workflow.
+- Fixed bundled rubric resource discovery and verified installation from an npm tarball in a clean project.

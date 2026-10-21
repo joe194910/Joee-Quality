@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import type { Criterion, CriterionAssessment, DimensionAssessment } from "../schemas/types.js";
 
@@ -32,7 +32,8 @@ export interface RubricConfig {
   signatureRequiresHumanReview: boolean;
 }
 
-export async function loadRubric(path = resolve("config/default-rubric.yaml")): Promise<RubricConfig> {
+const bundledRubricPath = fileURLToPath(new URL("../../config/default-rubric.yaml", import.meta.url));
+export async function loadRubric(path = bundledRubricPath): Promise<RubricConfig> {
   const parsed = YAML.parse(await readFile(path, "utf8")) as RubricConfig;
   const total = Object.values(parsed.weights).reduce((sum, value) => sum + value, 0);
   if (total !== 100) throw new Error(`量表权重总和必须为 100，当前为 ${total}`);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assessDimensions, calculateOverall, type RubricConfig } from "../../src/core/rubric.js";
+import { assessDimensions, calculateOverall, loadRubric, type RubricConfig } from "../../src/core/rubric.js";
 import type { CriterionAssessment } from "../../src/schemas/types.js";
 
 const rubric: RubricConfig = {
@@ -9,6 +9,7 @@ const rubric: RubricConfig = {
 };
 
 describe("rubric scoring", () => {
+  it("loads the bundled rubric independently of the caller working directory", async () => { const previous = process.cwd(); try { process.chdir(process.env.TEMP ?? previous); expect((await loadRubric()).version).toBe("0.1.0"); } finally { process.chdir(previous); } });
   it("keeps uncovered dimensions unscored", () => {
     const dimensions = assessDimensions([{ criterionId: "review.intent", status: "not_evaluated", score: null, reason: "missing", evidenceIds: [] }], rubric);
     expect(dimensions.find(d => d.dimension === "intent_fidelity")?.score).toBeNull();

@@ -12,6 +12,7 @@ coverage/
 # Test and temporary output
 .tmp-*/
 .tmp*/
+clean-install-test/
 
 # Logs
 *.log
