@@ -1,0 +1,6 @@
+{
+  "contractVersion": "1.0.0",
+  "producer": { "name": "example-design-exporter", "version": "1.0.0" },
+  "artifact": { "id": "design-example", "type": "design", "localPath": "./manifest.json", "ownerScope": "example", "privacy": "local" },
+  "brief": { "goal": "检查设计 manifest 的确定性可访问性", "domain": "design", "reviewDepth": "standard", "targetGrade": "A" }
+}

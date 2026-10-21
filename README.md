@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-47%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-51%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -321,6 +321,15 @@ jqs migrate .\legacy-report.json --out .\migrated-report.json
 
 迁移器补充当前版本要求的字段、记录迁移历史，并在写入前重新执行完整 Schema、证据引用和硬阻断不变量校验。无法满足当前协议的历史报告会被拒绝，不会静默丢弃数据。
 
+### 通过公开契约集成
+
+```powershell
+jqs evaluate-contract .\examples\design\contract.json `
+  --out .\.jqs\reports\contract-demo
+```
+
+上游只需生成 `contractVersion: 1.0.0` 的 JSON，包含 Artifact、Brief 和可选 Professional Review。路径相对于 contract 文件解析。Motion 可以选择调用该契约，但 Joee-Quality 不读取其私有实现，Motion 也不需要在运行时依赖 JQS。
+
 ### 管理 Quality Memory
 
 查看项目记忆：
@@ -366,6 +375,7 @@ jqs learn enable
 | `jqs compare` | 比较两次评审结果 |
 | `jqs verify` | 对修改后产物重新执行检查 |
 | `jqs migrate` | 将历史报告迁移到当前 Schema |
+| `jqs evaluate-contract` | 通过版本化公开 JSON 契约执行评审 |
 | `jqs learn` | 管理项目范围 Quality Memory |
 
 | 退出码 | 说明 |
@@ -425,8 +435,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  11 passed (11)
-Tests       47 passed (47)
+Test Files  12 passed (12)
+Tests       51 passed (51)
 ```
 
 测试覆盖以下关键场景：

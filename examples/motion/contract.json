@@ -1,0 +1,12 @@
+{
+  "contractVersion": "1.0.0",
+  "producer": { "name": "joee-motion", "version": "public-contract-example" },
+  "artifact": { "id": "motion-export", "type": "motion", "localPath": "./artifact.mp4", "ownerScope": "user", "privacy": "local" },
+  "brief": {
+    "goal": "检查 Motion 成片技术交付",
+    "domain": "motion",
+    "reviewDepth": "standard",
+    "requiresAudio": true,
+    "motionChecks": { "blackFrames": true, "silence": true, "keyframes": true, "subtitlePath": "./subtitles.srt" }
+  }
+}
