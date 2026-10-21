@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-19%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-22%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -52,6 +52,9 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 支持重新评审修改后的产物。
 - 支持比较两次报告中的已修复、仍存在和新增问题。
 - 覆盖率不足时使用 `unrated`，而不是强行给出等级。
+- 从 `config/default-rubric.yaml` 加载六维权重和覆盖率阈值。
+- 只对达到覆盖率要求的维度评分，并在维度说明中写明检查项分母。
+- 只有六个核心维度均具备有效分数时才计算 0–100 综合分。
 - 自动化检查不会授予 S 级。
 
 ### Quality Memory
@@ -362,8 +365,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  5 passed (5)
-Tests       19 passed (19)
+Test Files  6 passed (6)
+Tests       22 passed (22)
 ```
 
 测试覆盖以下关键场景：

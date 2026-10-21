@@ -6,3 +6,4 @@
 - Added Criterion-level assessments and evidence-reference validation.
 - Added configurable Code test commands without shell argument concatenation.
 - Added Draft-07 JSON Schema generation for reports.
+- Added YAML-backed six-dimension scoring, explicit criterion denominators, coverage gating, and blocker-first grade calculation.
