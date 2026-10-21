@@ -18,3 +18,4 @@
 - Fixed bundled rubric resource discovery and verified installation from an npm tarball in a clean project.
 - Added Node.js 20/22/24 CI, package verification, and direct dependency license notices.
 - Added executable V8 coverage reporting with enforced baseline thresholds in CI.
+- Automated clean-project installation and packaged CLI smoke tests in CI.

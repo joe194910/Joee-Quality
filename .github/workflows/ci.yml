@@ -36,4 +36,4 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm pack --dry-run
+      - run: npm run test:package

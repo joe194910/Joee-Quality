@@ -21,6 +21,7 @@
     "build": "npm run clean && tsc -p tsconfig.json",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:package": "node scripts/package-smoke.mjs",
     "schema": "npm run build && node dist/schemas/export.js config/report.schema.json",
     "prepack": "npm run build"
   },

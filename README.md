@@ -430,7 +430,7 @@ npm run build
 npm test
 npm run test:coverage
 npm run schema
-npm pack --dry-run
+npm run test:package
 ```
 
 当前测试结果：
