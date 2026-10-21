@@ -8,7 +8,7 @@ import { stable } from "./core/utils.js";
 import { markdown } from "./reports/markdown.js";
 import { reportSchema } from "./schemas/report.js";
 import { migrateReport } from "./schemas/migrate.js";
-import { integrationContractSchema } from "./integration/contract.js";
+import { briefSchema, integrationContractSchema } from "./integration/contract.js";
 import type { Artifact, Brief, Report } from "./schemas/types.js";
 import { compareReports } from "./core/compare.js";
 import { addMemory, deleteMemory, deprecateMemory, exportMemory, listMemory, setMemoryEnabled } from "./memory/store.js";
@@ -29,7 +29,7 @@ program.command("inspect").description("仅收集可接触的确定性证据").a
   const brief: Brief = { goal: "检查交付物可访问性", domain: o.domain }; const r = await evaluate(artifact(path, o.domain), brief); output({ artifact: r.artifact, evidence: r.evidence, findings: r.findings, limitations: r.limitations }, o.json); process.exitCode = r.overallStatus === "blocked" ? EXIT.FAILED : EXIT.OK;
 });
 program.command("evaluate").description("生成 JSON 与 Markdown 评审报告").argument("<artifact>").requiredOption("--brief <path>", "Brief JSON").requiredOption("--out <directory>", "输出目录").option("--review <path>", "专业评审 JSON").option("--json", "JSON 输出摘要").action(async (path, o) => {
-  const brief = await readJson<Brief>(o.brief); const a = artifact(path, brief.domain); a.metadata = {}; if (brief.domain === "code") Object.assign(a.metadata, { testCommand: brief.testCommand?.command ?? "npm", testArgs: brief.testCommand?.args ?? ["test"], testTimeoutMs: brief.testCommand?.timeoutMs ?? 120000, testMaxOutputBytes: brief.testCommand?.maxOutputBytes ?? 1048576 }); if (brief.domain === "motion") Object.assign(a.metadata, { evidenceDir: resolve(o.out, "evidence") }); if (o.review) Object.assign(a.metadata, { professionalReview: await readJson(o.review) });
+  const brief = briefSchema.parse(await readJson(o.brief)) as Brief; const a = artifact(path, brief.domain); a.metadata = {}; if (brief.domain === "code") Object.assign(a.metadata, { testCommand: brief.testCommand?.command ?? "npm", testArgs: brief.testCommand?.args ?? ["test"], testTimeoutMs: brief.testCommand?.timeoutMs ?? 120000, testMaxOutputBytes: brief.testCommand?.maxOutputBytes ?? 1048576 }); if (brief.domain === "motion") Object.assign(a.metadata, { evidenceDir: resolve(o.out, "evidence") }); if (o.review) Object.assign(a.metadata, { professionalReview: await readJson(o.review) });
   const r = await evaluate(a, brief); reportSchema.parse(r); const dir = resolve(o.out); await mkdir(dir, { recursive: true }); await writeFile(resolve(dir, "report.json"), stable(r)); await writeFile(resolve(dir, "report.md"), markdown(r)); output(o.json ? { status: r.overallStatus, grade: r.grade, score: r.score, report: resolve(dir, "report.json") } : `报告已生成：${dir}`, o.json); process.exitCode = r.overallStatus === "blocked" ? EXIT.FAILED : EXIT.OK;
 });
 program.command("report").description("渲染 JSON 报告为 Markdown").argument("<report>").option("--json", "仅校验并输出 JSON").action(async (path, o) => { const r = reportSchema.parse(await readJson(path)); output(o.json ? r : markdown(r), o.json); });

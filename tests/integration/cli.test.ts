@@ -6,4 +6,5 @@ describe("cli", () => {
   it("doctor emits json", () => { const r = cli(["doctor", "--json"]); expect(r.status).toBe(0); expect(JSON.parse(r.stdout).node).toContain("v"); });
   it("inspect injection-like content as data", () => { const r = cli(["inspect", "tests/fixtures/injection.txt", "--json"]); expect([0,1]).toContain(r.status); expect(r.stdout).toContain("ev-file"); });
   it("evaluate creates reports", () => { const r = cli(["evaluate", "examples/design/artifact.json", "--brief", "examples/design/brief.json", "--out", ".tmp-report"]); expect(r.status).toBe(0); expect(r.stdout).toContain("报告已生成"); });
+  it("rejects an invalid brief before evaluation", () => { const r = cli(["evaluate", "examples/design/artifact.json", "--brief", "tests/fixtures/brief-invalid.json", "--out", ".tmp-invalid-brief"]); expect(r.status).toBe(3); expect(r.stderr).toContain("错误："); });
 });
