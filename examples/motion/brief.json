@@ -1,0 +1,8 @@
+{
+  "goal": "检查带口播的视频技术交付",
+  "audience": "中文观众",
+  "acceptanceCriteria": ["可播放", "包含音轨"],
+  "targetGrade": "A",
+  "domain": "motion",
+  "requiresAudio": true
+}

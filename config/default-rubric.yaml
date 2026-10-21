@@ -1,0 +1,11 @@
+version: 0.1.0
+coverageThreshold: 0.7
+weights:
+  intent_fidelity: 20
+  professional_craft: 25
+  creative_judgment: 10
+  coherent_experience: 15
+  reliability: 20
+  critique_precision: 10
+anchors: [0, 2, 4, 6, 8, 10]
+signatureRequiresHumanReview: true

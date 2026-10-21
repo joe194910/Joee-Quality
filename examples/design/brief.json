@@ -1,0 +1,7 @@
+{
+  "goal": "确认示例 JSON 交付可读取且结构有效",
+  "audience": "项目团队",
+  "acceptanceCriteria": ["文件存在", "JSON 可解析"],
+  "targetGrade": "A",
+  "domain": "design"
+}
