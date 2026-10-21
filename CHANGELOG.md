@@ -13,3 +13,4 @@
 - Added Quality Memory export, permanent deletion, disable, and enable controls.
 - Added validated migration of unversioned and 0.1.0 reports to report schema 1.0.0.
 - Added validated professional-review imports, Quick/Standard/Signature gate behavior, and human-only S eligibility.
+- Added verification classification for fixed, open, added, regressed, and unverifiable findings.

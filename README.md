@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-45%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-47%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -55,7 +55,7 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 输出结构化 Evidence Ledger、Findings、Gate Assessments 和 Repair Plan。
 - 每个主要问题关联实际 Evidence ID、影响、修复建议和复验方式。
 - 支持重新评审修改后的产物。
-- 支持比较两次报告中的已修复、仍存在和新增问题。
+- 支持比较两次报告中的已修复、仍存在、新增、回归和因覆盖不足而无法验证的问题。
 - 覆盖率不足时使用 `unrated`，而不是强行给出等级。
 - 从 `config/default-rubric.yaml` 加载六维权重和覆盖率阈值。
 - 只对达到覆盖率要求的维度评分，并在维度说明中写明检查项分母。
@@ -426,7 +426,7 @@ npm pack --dry-run
 
 ```text
 Test Files  11 passed (11)
-Tests       45 passed (45)
+Tests       47 passed (47)
 ```
 
 测试覆盖以下关键场景：
