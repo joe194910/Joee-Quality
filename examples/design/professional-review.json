@@ -1,0 +1,32 @@
+{
+  "reviewer": {
+    "id": "reviewer-example",
+    "name": "Example Reviewer",
+    "qualification": "Qualified design reviewer",
+    "independent": true
+  },
+  "evidence": [
+    {
+      "id": "ev-expert-example",
+      "kind": "expert_judgment",
+      "locator": "artifact:complete-review",
+      "source": "independent professional review",
+      "observedAt": "2026-10-21T00:00:00.000Z",
+      "confidence": 0.95,
+      "notes": "Example only; replace with a real review before production use.",
+      "availability": "available"
+    }
+  ],
+  "criteria": [
+    { "criterionId": "review.intent", "status": "pass", "score": 10, "reason": "目标证据完整。", "evidenceIds": ["ev-expert-example"] },
+    { "criterionId": "review.craft", "status": "pass", "score": 10, "reason": "工艺证据完整。", "evidenceIds": ["ev-expert-example"] },
+    { "criterionId": "review.creativity", "status": "pass", "score": 10, "reason": "创造性证据完整。", "evidenceIds": ["ev-expert-example"] },
+    { "criterionId": "review.coherence", "status": "pass", "score": 10, "reason": "一致性证据完整。", "evidenceIds": ["ev-expert-example"] },
+    { "criterionId": "review.reliability", "status": "pass", "score": 10, "reason": "可靠性证据完整。", "evidenceIds": ["ev-expert-example"] },
+    { "criterionId": "review.critique", "status": "pass", "score": 10, "reason": "独立复核证据完整。", "evidenceIds": ["ev-expert-example"] }
+  ],
+  "gates": [
+    { "gate": "critique", "status": "pass", "reason": "独立专业复核完成。", "evidenceIds": ["ev-expert-example"], "reviewerMode": "human", "reviewedAt": "2026-10-21T00:00:00.000Z" },
+    { "gate": "acceptance", "status": "pass", "reason": "专业终审完成。", "evidenceIds": ["ev-expert-example"], "reviewerMode": "human", "reviewedAt": "2026-10-21T00:00:00.000Z" }
+  ]
+}

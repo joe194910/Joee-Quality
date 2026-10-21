@@ -3,5 +3,6 @@
   "audience": "项目团队",
   "acceptanceCriteria": ["文件存在", "JSON 可解析"],
   "targetGrade": "A",
-  "domain": "design"
+  "domain": "design",
+  "reviewDepth": "standard"
 }

@@ -13,6 +13,7 @@ description: Evidence-first audit and acceptance for deliverables. Use when user
 2. 读取 `references/core.md`、`evidence.md`、`gates.md`，并按领域加载 `references/domains/<domain>.md`。
 3. 将目标写为 Brief JSON，运行 `jqs inspect <artifact> --domain <domain> --json`。
 4. 运行 `jqs evaluate <artifact> --brief <brief.json> --out <directory>`。
+   Signature 终审必须额外使用 `--review <professional-review.json>` 导入合格独立人工证据。
 5. 引用报告中的 evidence ID，先处理 blocking/critical，再给 Repair Contract。
 6. 修改后运行 `jqs verify <report.json> --artifact <artifact> --out <directory>`；无法执行的验证必须明确为 unverifiable。
 

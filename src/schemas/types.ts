@@ -13,7 +13,15 @@ export interface Brief {
   acceptanceCriteria?: string[]; targetGrade?: "S" | "A" | "B" | "C"; domain: Domain;
   requiresAudio?: boolean;
   motionChecks?: { blackFrames?: boolean; silence?: boolean; keyframes?: boolean; subtitlePath?: string };
+  reviewDepth?: "quick" | "standard" | "signature";
   testCommand?: { command: string; args?: string[]; timeoutMs?: number; maxOutputBytes?: number };
+}
+export interface ProfessionalReview {
+  reviewer: { id: string; name?: string; qualification: string; independent: boolean };
+  evidence: Evidence[];
+  criteria: CriterionAssessment[];
+  gates?: GateAssessment[];
+  notes?: string;
 }
 export interface Criterion {
   id: string; description: string; domain: Domain | "core"; dimension: string;

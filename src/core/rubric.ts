@@ -56,13 +56,13 @@ export function assessDimensions(assessments: CriterionAssessment[], rubric: Rub
   });
 }
 
-export function calculateOverall(dimensions: DimensionAssessment[], rubric: RubricConfig, blocked: boolean): { score: number | null; grade: "S" | "A" | "B" | "C" | "F" | null } {
+export function calculateOverall(dimensions: DimensionAssessment[], rubric: RubricConfig, blocked: boolean, signatureEligible = false): { score: number | null; grade: "S" | "A" | "B" | "C" | "F" | null } {
   if (blocked) return { score: null, grade: "F" };
   const required = Object.keys(rubric.weights);
   if (!required.every(name => dimensions.find(d => d.dimension === name)?.score !== null)) return { score: null, grade: null };
   const weightedTotal = required.reduce((sum, name) => sum + dimensions.find(d => d.dimension === name)!.score! * rubric.weights[name], 0);
   const score = Math.round(weightedTotal) / 10;
   const minimum = Math.min(...required.map(name => dimensions.find(d => d.dimension === name)!.score!));
-  const grade = score >= 90 && minimum >= 8 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : "F";
+  const grade = signatureEligible && score >= 92 && minimum >= 8 ? "S" : score >= 90 && minimum >= 8 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : "F";
   return { score, grade };
 }

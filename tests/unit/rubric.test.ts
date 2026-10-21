@@ -30,4 +30,5 @@ describe("rubric scoring", () => {
     const dimensions = Object.keys(rubric.weights).map(dimension => ({ dimension, score: 10, confidence: 1, coverage: 1, criterionIds: [dimension], reason: "complete", evidenceIds: ["expert"] }));
     expect(calculateOverall(dimensions, rubric, true)).toEqual({ score: null, grade: "F" });
   });
+  it("never awards S without signature eligibility", () => { const dimensions = Object.keys(rubric.weights).map(dimension => ({ dimension, score: 10, confidence: 1, coverage: 1, criterionIds: [dimension], reason: "complete", evidenceIds: ["expert"] })); expect(calculateOverall(dimensions, rubric, false, false).grade).toBe("A"); expect(calculateOverall(dimensions, rubric, false, true).grade).toBe("S"); });
 });

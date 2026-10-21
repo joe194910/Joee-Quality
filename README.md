@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-40%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-45%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -61,6 +61,8 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 只对达到覆盖率要求的维度评分，并在维度说明中写明检查项分母。
 - 只有六个核心维度均具备有效分数时才计算 0–100 综合分。
 - 自动化检查不会授予 S 级。
+- 支持导入带评审者身份、专业资格、独立性和真实 Evidence ID 的人工专业评审。
+- `standard` 深度即使满分也最高为 A；只有 `signature` 深度、六维完整、总分至少 92、各维至少 8 且独立合格人工终审时才允许 S。
 
 ### Design 结构化评审
 
@@ -220,6 +222,17 @@ jqs evaluate ./examples/design/artifact.json \
   --brief ./examples/design/brief.json \
   --out ./.jqs/reports/design-demo
 ```
+
+### 导入专业评审
+
+```powershell
+jqs evaluate .\examples\design\manifest.json `
+  --brief .\examples\design\brief-signature.json `
+  --review .\examples\design\professional-review.json `
+  --out .\.jqs\reports\signature-demo
+```
+
+专业评审 JSON 必须提供评审者资格、独立性、可定位证据、六维 Criterion Assessment，并保证所有 Evidence ID 可解析。仓库示例仅展示契约格式，不代表真实项目已经获得专业认证。
 
 ### 评审代码项目
 
@@ -412,8 +425,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  10 passed (10)
-Tests       40 passed (40)
+Test Files  11 passed (11)
+Tests       45 passed (45)
 ```
 
 测试覆盖以下关键场景：

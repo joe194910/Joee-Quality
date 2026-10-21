@@ -1,0 +1,12 @@
+{
+  "goal": "对结构化设计交付执行 Signature 终审示例",
+  "audience": "项目团队",
+  "acceptanceCriteria": [
+    "Design manifest 可解析",
+    "确定性可访问性检查通过",
+    "六个核心维度具有独立专业证据"
+  ],
+  "targetGrade": "S",
+  "domain": "design",
+  "reviewDepth": "signature"
+}
