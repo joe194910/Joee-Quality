@@ -12,7 +12,7 @@ export interface Brief {
   goal: string; audience?: string; deliverables?: string[]; constraints?: string[];
   acceptanceCriteria?: string[]; targetGrade?: "S" | "A" | "B" | "C"; domain: Domain;
   requiresAudio?: boolean;
-  testCommand?: { command: string; args?: string[] };
+  testCommand?: { command: string; args?: string[]; timeoutMs?: number; maxOutputBytes?: number };
 }
 export interface Criterion {
   id: string; description: string; domain: Domain | "core"; dimension: string;

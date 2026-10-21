@@ -103,6 +103,16 @@
             "command": {
               "minLength": 1,
               "type": "string"
+            },
+            "maxOutputBytes": {
+              "maximum": 10485760,
+              "minimum": 1024,
+              "type": "integer"
+            },
+            "timeoutMs": {
+              "maximum": 600000,
+              "minimum": 100,
+              "type": "integer"
             }
           },
           "required": [

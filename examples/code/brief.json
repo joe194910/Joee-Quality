@@ -4,6 +4,8 @@
   "targetGrade": "A",
   "testCommand": {
     "command": "npm",
-    "args": ["test"]
+    "args": ["test"],
+    "timeoutMs": 120000,
+    "maxOutputBytes": 1048576
   }
 }

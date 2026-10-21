@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-22%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-25%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -35,6 +35,8 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 对代码项目运行真实 `npm test` 命令。
 - 保存测试进程的真实退出码和输出日志。
 - 测试退出码不为 `0` 时生成 `critical` finding 并阻断评级。
+- 测试命令经过允许列表检查，不通过 shell 拼接参数。
+- 支持配置执行超时和最大日志字节数，超时会终止进程并阻断评级。
 - 不通过静态猜测或文件数量推断测试已经通过。
 
 ### Motion 评审
@@ -218,7 +220,9 @@ npm test
   "domain": "code",
   "testCommand": {
     "command": "npm",
-    "args": ["run", "test:integration"]
+    "args": ["run", "test:integration"],
+    "timeoutMs": 120000,
+    "maxOutputBytes": 1048576
   }
 }
 ```
@@ -366,7 +370,7 @@ npm pack --dry-run
 
 ```text
 Test Files  6 passed (6)
-Tests       22 passed (22)
+Tests       25 passed (25)
 ```
 
 测试覆盖以下关键场景：
@@ -405,7 +409,7 @@ joee-quality
 - 当前没有多模态视觉模型，不能独立判断构图、色彩、字体、叙事或“高级感”。
 - 当前没有声音艺术评审器，存在音轨不代表口播、音乐或混音质量合格。
 - 当前没有联网 Research 事实核验器，不能自动证明研究结论和引用正确。
-- Code 测试命令由 Brief 配置，但当前尚未提供超时、资源限额和命令允许列表策略。
+- Code 测试命令具有允许列表、超时和日志上限，但尚未提供 CPU/内存级操作系统沙箱。
 - 当前没有黑帧、静音区间、关键帧抽样和字幕时间轴检查。
 - `verify` 重跑的是已经实现的确定性检查，不等于独立人工复审。
 - 当前不会自动授予 S 级；S 需要合格的人类或专业终审。
