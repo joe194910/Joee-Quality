@@ -9,7 +9,7 @@ import { markdown } from "./reports/markdown.js";
 import { reportSchema } from "./schemas/report.js";
 import type { Artifact, Brief, Report } from "./schemas/types.js";
 import { compareReports } from "./core/compare.js";
-import { addMemory, deprecateMemory, listMemory } from "./memory/store.js";
+import { addMemory, deleteMemory, deprecateMemory, exportMemory, listMemory, setMemoryEnabled } from "./memory/store.js";
 
 const EXIT = { OK: 0, FAILED: 1, USAGE: 2, ENVIRONMENT: 3 } as const;
 const program = new Command().name("jqs").description("Joee-Quality evidence-first quality evaluator").version("0.1.0");
@@ -39,6 +39,10 @@ const learn = program.command("learn").description("管理本地范围 Quality M
 learn.command("list").option("--scope <scope>", "作用域", "project").action(async () => output(await listMemory(process.cwd()), true));
 learn.command("add").requiredOption("--category <category>").requiredOption("--statement <text>").requiredOption("--source <source>").option("--scope <scope>", "作用域", "project").action(async o => output(await addMemory(process.cwd(), { category: o.category, statement: o.statement, source: o.source, counterexamples: [], scope: o.scope, invalidation: "新证据推翻或适用范围变化" }), true));
 learn.command("deprecate").argument("<id>").action(async id => output(await deprecateMemory(process.cwd(), id), true));
+learn.command("delete").argument("<id>").description("永久删除一条本地记忆").action(async id => output(await deleteMemory(process.cwd(), id), true));
+learn.command("export").requiredOption("--out <path>", "导出 JSON 路径").action(async o => output(await exportMemory(process.cwd(), resolve(o.out)), true));
+learn.command("disable").description("禁用本地记忆写入").action(async () => output(await setMemoryEnabled(process.cwd(), false), true));
+learn.command("enable").description("重新启用本地记忆写入").action(async () => output(await setMemoryEnabled(process.cwd(), true), true));
 
 program.exitOverride();
 try { await program.parseAsync(); } catch (error: any) {

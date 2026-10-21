@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-35%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-37%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -83,6 +83,7 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 支持 `preference`、`observation`、`verified`、`tool_gap`、`hypothesis` 和 `deprecated`。
 - 禁止模型把没有外部来源的判断自行标记为 `verified`。
 - 用户个人偏好不会自动提升为通用质量规则。
+- 支持用户导出、永久删除、禁用和重新启用本地记忆。
 
 ## 运行要求
 
@@ -323,6 +324,15 @@ jqs learn add `
 jqs learn deprecate <memory-id>
 ```
 
+导出、删除或禁用本地记忆：
+
+```powershell
+jqs learn export --out .\memory-export.json
+jqs learn delete <memory-id>
+jqs learn disable
+jqs learn enable
+```
+
 ## 命令与退出码
 
 | 命令 | 说明 |
@@ -394,7 +404,7 @@ npm pack --dry-run
 
 ```text
 Test Files  9 passed (9)
-Tests       35 passed (35)
+Tests       37 passed (37)
 ```
 
 测试覆盖以下关键场景：

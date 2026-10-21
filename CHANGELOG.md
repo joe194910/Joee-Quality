@@ -10,3 +10,4 @@
 - Added Code command allowlisting, execution timeouts, bounded log capture, and no-shell process execution.
 - Added FFmpeg black/silence detection, real frame sampling, and SRT overlap/overflow validation.
 - Added structured Design accessibility checks and Research claim/source traceability checks.
+- Added Quality Memory export, permanent deletion, disable, and enable controls.

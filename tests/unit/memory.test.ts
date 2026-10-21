@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { addMemory } from "../../src/memory/store.js";
+import { addMemory, deleteMemory, exportMemory, listMemory, setMemoryEnabled } from "../../src/memory/store.js";
 describe("memory safety", () => {
   it("rejects self-certified verified memory", async () => await expect(addMemory(".", { category:"verified", statement:"x", source:"model", counterexamples:[], scope:"project", invalidation:"new evidence" })).rejects.toThrow("必须有"));
   it("allows preference without universalizing it", async () => { const root = `.tmp-memory-${Date.now()}`; const x = await addMemory(root, { category:"preference", statement:"喜欢蓝色", source:"user", counterexamples:[], scope:"project", invalidation:"user changes preference" }); expect(x.category).toBe("preference"); });
+  it("can disable and re-enable local memory writes", async () => { const root = `.tmp-memory-disable-${Date.now()}`; await setMemoryEnabled(root, false); await expect(addMemory(root, { category:"observation", statement:"x", source:"test", counterexamples:[], scope:"project", invalidation:"x" })).rejects.toThrow("已禁用"); expect((await listMemory(root)).enabled).toBe(false); await setMemoryEnabled(root, true); expect((await listMemory(root)).enabled).toBe(true); });
+  it("exports and deletes user memory", async () => { const root = `.tmp-memory-export-${Date.now()}`; const item = await addMemory(root, { category:"observation", statement:"x", source:"test", counterexamples:[], scope:"project", invalidation:"x" }); const target = `${root}/export.json`; expect((await exportMemory(root, target)).count).toBe(1); await deleteMemory(root, item.id); expect((await listMemory(root)).entries).toHaveLength(0); });
 });
