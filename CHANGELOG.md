@@ -16,3 +16,4 @@
 - Added verification classification for fixed, open, added, regressed, and unverifiable findings.
 - Added a versioned standalone integration contract and `evaluate-contract` CLI workflow.
 - Fixed bundled rubric resource discovery and verified installation from an npm tarball in a clean project.
+- Added Node.js 20/22/24 CI, package verification, and direct dependency license notices.

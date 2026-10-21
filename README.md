@@ -522,3 +522,5 @@ npm test
 ## 许可证
 
 本项目使用 [MIT License](LICENSE)。
+
+直接依赖及其许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。锁定的完整依赖树记录在 `package-lock.json`。
