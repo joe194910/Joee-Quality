@@ -1,0 +1,8 @@
+{
+  "sources": [
+    { "id": "source-1", "title": "Agent Skills Specification", "url": "https://agentskills.io/specification" }
+  ],
+  "claims": [
+    { "id": "claim-1", "kind": "fact", "text": "Skill 使用 YAML frontmatter 描述元数据。", "sourceIds": ["source-1"] }
+  ]
+}

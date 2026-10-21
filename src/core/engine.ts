@@ -4,6 +4,8 @@ import type { Environment, Evaluator } from "../evaluators/types.js";
 import { fileEvaluator } from "../evaluators/file.js";
 import { codeEvaluator } from "../evaluators/code.js";
 import { motionEvaluator } from "../evaluators/motion.js";
+import { designEvaluator } from "../evaluators/design.js";
+import { researchEvaluator } from "../evaluators/research.js";
 import { now, sha256 } from "./utils.js";
 import { assessDimensions, calculateOverall, loadRubric } from "./rubric.js";
 
@@ -19,6 +21,8 @@ export async function evaluate(artifact: Artifact, brief: Brief, suppliedEnv?: E
   const evaluators: Evaluator[] = [fileEvaluator];
   if (brief.domain === "code") evaluators.push(codeEvaluator);
   if (brief.domain === "motion") evaluators.push(motionEvaluator);
+  if (brief.domain === "design") evaluators.push(designEvaluator);
+  if (brief.domain === "research") evaluators.push(researchEvaluator);
   const parts = await Promise.all(evaluators.filter(e => e.supports(artifact, env)).map(e => e.inspect(artifact, brief, env)));
   const evidence = parts.flatMap(x => x.evidence); const findings = parts.flatMap(x => x.findings); const limitations = parts.flatMap(x => x.limitations);
   const criteria = parts.flatMap(x => x.criteria);

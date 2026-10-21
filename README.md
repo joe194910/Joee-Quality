@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-30%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-35%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -61,6 +61,21 @@ Joee-Quality 将交付物检查、证据记录、硬阻断、修复任务和复�
 - 只对达到覆盖率要求的维度评分，并在维度说明中写明检查项分母。
 - 只有六个核心维度均具备有效分数时才计算 0–100 综合分。
 - 自动化检查不会授予 S 级。
+
+### Design 结构化评审
+
+- 读取 Design JSON manifest 中的文本、字号、前景色和背景色。
+- 按 WCAG AA 阈值计算文本对比度。
+- 检查小于 12px 的文本、空文本元素和重复元素 ID。
+- 只报告确定性可访问性与一致性问题，不把 manifest 检查冒充完整视觉审美评审。
+
+### Research 结构化评审
+
+- 读取 Research JSON manifest 中的 `claims` 和 `sources`。
+- 校验来源 ID、标题和 URL 元数据。
+- 检查事实主张是否具有来源，以及 source ID 是否能解析。
+- 输出可追溯主张覆盖率和明确分母。
+- 不联网推断来源内容真实性、权威性或是否真正支持主张。
 
 ### Quality Memory
 
@@ -378,8 +393,8 @@ npm pack --dry-run
 当前测试结果：
 
 ```text
-Test Files  7 passed (7)
-Tests       30 passed (30)
+Test Files  9 passed (9)
+Tests       35 passed (35)
 ```
 
 测试覆盖以下关键场景：
@@ -415,9 +430,9 @@ joee-quality
 
 ## 当前限制
 
-- 当前没有多模态视觉模型，不能独立判断构图、色彩、字体、叙事或“高级感”。
+- Design manifest 可检查文本对比度、字号和结构一致性，但没有多模态视觉模型，不能独立判断构图、品牌表达、叙事或“高级感”。
 - 当前没有声音艺术评审器，存在音轨不代表口播、音乐或混音质量合格。
-- 当前没有联网 Research 事实核验器，不能自动证明研究结论和引用正确。
+- Research manifest 可检查引用结构和覆盖率，但没有联网事实核验器，不能自动证明研究结论和来源内容正确。
 - Code 测试命令具有允许列表、超时和日志上限，但尚未提供 CPU/内存级操作系统沙箱。
 - 黑帧、静音和关键帧属于阈值或抽样检查，不能替代逐帧观看和人工试听；字幕当前支持 SRT 时间轴，不检查画面排版溢出。
 - `verify` 重跑的是已经实现的确定性检查，不等于独立人工复审。

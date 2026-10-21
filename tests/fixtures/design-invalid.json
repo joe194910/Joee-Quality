@@ -1,0 +1,6 @@
+{
+  "textElements": [
+    { "id": "label", "text": "Low", "fontSize": 10, "color": "#777777", "backgroundColor": "#888888" },
+    { "id": "label", "text": "", "fontSize": 16, "color": "#000000", "backgroundColor": "#ffffff" }
+  ]
+}

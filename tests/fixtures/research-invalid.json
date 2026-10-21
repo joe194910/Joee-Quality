@@ -1,0 +1,9 @@
+{
+  "sources": [
+    { "id": "s1", "title": "Broken", "url": "not-a-url" }
+  ],
+  "claims": [
+    { "id": "c1", "kind": "fact", "text": "Unsupported", "sourceIds": [] },
+    { "id": "c2", "kind": "fact", "text": "Broken ref", "sourceIds": ["missing"] }
+  ]
+}

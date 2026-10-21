@@ -1,0 +1,7 @@
+{
+  "canvas": { "width": 1440, "height": 900 },
+  "textElements": [
+    { "id": "title", "text": "Joee-Quality", "fontSize": 32, "color": "#111111", "backgroundColor": "#ffffff" },
+    { "id": "body", "text": "Evidence-first delivery review", "fontSize": 16, "color": "#333333", "backgroundColor": "#ffffff" }
+  ]
+}
