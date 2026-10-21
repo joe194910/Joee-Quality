@@ -8,7 +8,7 @@
   <img alt="版本" src="https://img.shields.io/badge/version-0.1.0-0d6efd">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D20-339933">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178c6">
-  <img alt="测试" src="https://img.shields.io/badge/tests-53%20passed-2ea44f">
+  <img alt="测试" src="https://img.shields.io/badge/tests-55%20passed-2ea44f">
   <img alt="许可证" src="https://img.shields.io/badge/license-MIT-yellow">
 </p>
 
@@ -437,7 +437,7 @@ npm run test:package
 
 ```text
 Test Files  12 passed (12)
-Tests       53 passed (53)
+Tests       55 passed (55)
 ```
 
 CI 使用 V8 覆盖率报告并强制语句、分支、函数和行覆盖率均不低于 70%。

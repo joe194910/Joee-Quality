@@ -21,12 +21,21 @@ export const reportSchema = z.object({
   evidence: z.array(evidence), limitations: z.array(z.string()), reviewHistory: z.array(z.object({ at: z.string().datetime(), action: z.string(), reviewer: z.string() }))
 }).superRefine((report, ctx) => {
   const ids = new Set(report.evidence.map(e => e.id));
+  if (ids.size !== report.evidence.length) ctx.addIssue({ code: "custom", message: "Evidence ID 必须唯一", path: ["evidence"] });
+  const findingIds = new Set(report.findings.map(f => f.id));
+  if (findingIds.size !== report.findings.length) ctx.addIssue({ code: "custom", message: "Finding ID 必须唯一", path: ["findings"] });
+  const criterionIds = new Set(report.criteria.map(c => c.criterionId));
+  if (criterionIds.size !== report.criteria.length) ctx.addIssue({ code: "custom", message: "Criterion Assessment ID 必须唯一", path: ["criteria"] });
   for (const [path, refs] of [
     ...report.findings.map((x, i) => [["findings", i, "evidenceIds"], x.evidenceIds] as const),
     ...report.dimensions.map((x, i) => [["dimensions", i, "evidenceIds"], x.evidenceIds] as const),
     ...report.gates.map((x, i) => [["gates", i, "evidenceIds"], x.evidenceIds] as const),
     ...report.criteria.map((x, i) => [["criteria", i, "evidenceIds"], x.evidenceIds] as const)
   ]) for (const ref of refs) if (!ids.has(ref)) ctx.addIssue({ code: "custom", message: `不存在的证据引用: ${ref}`, path: [...path] });
+  for (const [index, task] of report.repairPlan.entries()) {
+    if (!task.findingIds.length) ctx.addIssue({ code: "custom", message: "Repair Task 必须引用至少一个 Finding", path: ["repairPlan", index, "findingIds"] });
+    for (const ref of task.findingIds) if (!findingIds.has(ref)) ctx.addIssue({ code: "custom", message: `不存在的 Finding 引用: ${ref}`, path: ["repairPlan", index, "findingIds"] });
+  }
   if (report.findings.some(f => f.blocking && f.status === "open") && report.overallStatus !== "blocked") ctx.addIssue({ code: "custom", message: "存在未解决硬阻断时 overallStatus 必须为 blocked", path: ["overallStatus"] });
   if (report.overallStatus === "blocked" && report.grade && ["S", "A"].includes(report.grade)) ctx.addIssue({ code: "custom", message: "硬阻断报告不得评级为 S/A", path: ["grade"] });
 });

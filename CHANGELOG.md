@@ -20,3 +20,4 @@
 - Added executable V8 coverage reporting with enforced baseline thresholds in CI.
 - Automated clean-project installation and packaged CLI smoke tests in CI.
 - Added runtime Brief validation before evaluation and refreshed the documented capability limits.
+- Enforced unique report identifiers and Repair Plan references to existing Findings.
