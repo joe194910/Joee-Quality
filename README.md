@@ -112,12 +112,38 @@ FFprobe available
 
 ## 安装
 
+Joee-Quality 由 Agent Skill 和 `jqs` CLI 两部分组成。Agent Skill 负责指导评审流程，CLI 负责执行确定性检查、生成报告和返回可用于 CI 的退出码。建议同时安装。
+
+### 使用通用 Skills 安装器（推荐）
+
+交互式选择 Skill、安装范围和目标客户端：
+
 ```powershell
-git clone <你的仓库地址>
-cd joee-quality
-npm install
-npm run build
-npm link
+npx skills add joe194910/Joee-Quality
+```
+
+全局安装到 Codex：
+
+```powershell
+npx skills add joe194910/Joee-Quality -g -a codex -s joee-quality -y --copy
+```
+
+全局安装到安装器检测到的所有兼容客户端：
+
+```powershell
+npx skills add joe194910/Joee-Quality -g --all --copy
+```
+
+不同版本的安装器可能使用不同的客户端标识。安装到 Claude Code、Cursor、OpenCode、Windsurf、Gemini CLI、GitHub Copilot 或其他客户端时，推荐先使用交互式命令从实际检测结果中选择，不要猜测 `-a` 参数值。
+
+WorkBuddy 等提供独立 Skill 管理界面的客户端，可以优先尝试交互式安装；若未被安装器检测到，请将 `skills/joee-quality` 整个目录打包或复制，并通过客户端的 Skill 导入界面安装。不能只复制 `SKILL.md`，因为运行时还需要 `references/`。
+
+### 安装 jqs CLI
+
+从 GitHub 全局安装：
+
+```powershell
+npm install -g github:joe194910/Joee-Quality
 ```
 
 验证安装：
@@ -128,11 +154,45 @@ jqs --help
 jqs doctor --json
 ```
 
-不注册全局命令时，可以直接运行：
+### 从本地仓库离线安装
+
+当目标机器无法连接 GitHub，或你正在开发 Joee-Quality 时：
+
+```powershell
+git clone https://github.com/joe194910/Joee-Quality.git
+cd Joee-Quality
+npm install
+npm run build
+
+npx skills add . -g -a codex -s joee-quality -y --copy
+npm install -g .
+jqs doctor --json
+```
+
+如果仓库已经存在，可以省略 `git clone`。要安装到其他客户端，请去掉 `-a codex` 进入交互选择，或使用 `-g --all --copy` 安装到所有被检测到的兼容客户端。
+
+不注册全局 CLI 时，可以直接运行：
 
 ```powershell
 node .\dist\cli.js --help
 ```
+
+### 更新和卸载
+
+更新 GitHub 版本时，重新执行安装命令即可：
+
+```powershell
+npx skills add joe194910/Joee-Quality -g -a codex -s joee-quality -y --copy
+npm install -g github:joe194910/Joee-Quality
+```
+
+CLI 可以使用 npm 卸载：
+
+```powershell
+npm uninstall -g joee-quality
+```
+
+Skill 的卸载方式由目标客户端或 `skills` 安装器管理；删除前请确认路径确实是 Joee-Quality 的安装目录。
 
 ## 开始使用
 
@@ -387,7 +447,7 @@ jqs learn enable
 
 自动化流程应同时读取退出码和 `report.json`，不应只根据终端文字判断结果。
 
-## Agent Skill 安装
+## Agent Skill 使用
 
 Skill 文件位于：
 
@@ -397,15 +457,9 @@ skills\joee-quality\
 └─ references\
 ```
 
-安装时复制整个 `joee-quality` 目录。只复制 `SKILL.md` 会缺少核心原则、证据规范、Gate、严重度和领域规则。
+推荐使用前面的通用 `skills` 安装器。手工安装时必须复制整个 `joee-quality` 目录；只复制 `SKILL.md` 会缺少核心原则、证据规范、Gate、严重度和领域规则。
 
-Codex 用户级手动安装示例：
-
-```powershell
-Copy-Item -Recurse .\skills\joee-quality "$env:USERPROFILE\.codex\skills\joee-quality"
-```
-
-安装 CLI 后，可以在 Agent 中使用类似请求：
+安装完成并重启目标客户端后，可以在 Agent 中使用类似请求：
 
 ```text
 使用 Joee-Quality 检查这个交付。
