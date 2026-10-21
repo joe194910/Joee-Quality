@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npm test
+      - run: npm run test:coverage
       - run: npm run schema
       - run: git diff --exit-code -- config/report.schema.json
 

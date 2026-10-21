@@ -428,6 +428,7 @@ Copy-Item -Recurse .\skills\joee-quality "$env:USERPROFILE\.codex\skills\joee-qu
 ```powershell
 npm run build
 npm test
+npm run test:coverage
 npm run schema
 npm pack --dry-run
 ```
@@ -438,6 +439,8 @@ npm pack --dry-run
 Test Files  12 passed (12)
 Tests       52 passed (52)
 ```
+
+CI 使用 V8 覆盖率报告并强制语句、分支、函数和行覆盖率均不低于 70%。
 
 `npm pack` 产物还会安装到一个不包含源码和根目录配置的干净临时项目中，并实际运行安装包提供的 `jqs doctor` 与 `jqs evaluate`。量表从安装包自身定位，不依赖调用方工作目录。
 
